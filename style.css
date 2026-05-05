@@ -22,7 +22,169 @@ button, input, select, textarea {
 }
 
 /* ==================== */
-/* 2. BUTTONS & UTILS   */
+/* 2. NAVBAR & NAVIGATION */
+/* ==================== */
+.navbar {
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    background-color: white;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.navbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.navbar-brand {
+    flex-shrink: 0;
+    margin-right: 0;
+}
+
+.navbar-collapse {
+    flex-grow: 0 !important;
+    flex-basis: auto !important;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+@media (min-width: 992px) {
+    .navbar-collapse {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .navbar-nav {
+        margin: 0;
+        white-space: nowrap;
+    }
+}
+
+.navbar .d-flex {
+    flex-shrink: 0;
+}
+
+.nav-link {
+    color: #4a4a4a !important;
+    position: relative;
+    padding: 8px 16px !important;
+    transition: color 0.3s ease;
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.nav-link:hover {
+    color: #ed2739 !important;
+    background-color: rgba(237, 39, 57, 0.05);
+}
+
+.nav-link.active-red {
+    color: #ed2739 !important;
+}
+
+.nav-link.active-red::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 3px;
+    background-color: #ed2739;
+    border-radius: 2px;
+}
+
+.nav-link .badge {
+    font-size: 0.65rem;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.bi-search:hover {
+    color: #ed2739 !important;
+    cursor: pointer;
+}
+
+/* Navbar Responsive */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: static;
+        transform: none;
+        margin-top: 15px;
+        padding: 15px 0;
+        border-top: 1px solid #eee;
+    }
+    
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+    }
+    
+    .nav-link {
+        text-align: center;
+        padding: 12px 16px !important;
+    }
+    
+    .nav-link.active-red::after {
+        bottom: 5px;
+        width: 50px;
+    }
+    
+    .navbar .d-flex {
+        margin-left: auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .navbar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .nav-link {
+        padding: 8px 12px !important;
+    }
+}
+
+.navbar-toggler {
+    border: none;
+    padding: 8px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.nav-link:not(.active-red)::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: #ed2739;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.nav-link:not(.active-red):hover::after {
+    width: 70%;
+}
+
+/* ==================== */
+/* 3. BUTTONS & UTILS */
 /* ==================== */
 .btn-success {
     background-color: #ed2739 !important;
@@ -38,14 +200,426 @@ button, input, select, textarea {
     transform: scale(1.05);
 }
 
+.btn-outline-success {
+    border-color: #ed2739 !important;
+    color: #ed2739 !important;
+}
+
+.btn-outline-success:hover {
+    background-color: #ed2739 !important;
+    color: white !important;
+}
+
+.btn-explore:hover {
+    background: #c41e2d;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(237, 39, 57, 0.3);
+}
+
 .cursor-pointer {
     cursor: pointer;
 }
 
 /* ==================== */
-/* 3. UTILITIES & EXTRA */
+/* 4. FILTER CATEGORIES */
+/* ==================== */
+.filter-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #666;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #ed2739;
+    color: white;
+    border-color: #ed2739;
+}
+
+.filter-scroll-wrapper {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.filter-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+/* ==================== */
+/* 5. MENU CARDS */
+/* ==================== */
+.menu-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.menu-card-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    display: block;
+}
+
+.menu-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.menu-card:hover .menu-card-image img {
+    transform: scale(1.1);
+}
+
+.promo-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ed2739;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    z-index: 10;
+}
+
+.menu-card-body {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.menu-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.rating {
+    color: #ff9800;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.resto-name {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.terjual {
+    font-size: 0.75rem;
+    color: #999;
+}
+
+.harga-asli {
+    text-decoration: line-through;
+    color: #adb5bd;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.harga {
+    color: #ed2739;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.btn-pesan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #ed2739;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.3s;
+    border: none;
+    margin-top: 10px;
+}
+
+.btn-pesan:hover {
+    background: #c41e2d;
+    transform: translateY(-2px);
+}
+
+/* ==================== */
+/* 6. HEMAT HERO SECTION */
+/* ==================== */
+.hemat-hero-section {
+    background: linear-gradient(135deg, #fff5f5, #ffe0e0);
+    padding: 60px 0;
+}
+
+/* ==================== */
+/* 7. PROMO BANNER & FOOTER */
+/* ==================== */
+.promo-banner {
+    background: linear-gradient(135deg, #ed2739 0%, #c41e2d 100%);
+    border-radius: 20px;
+    padding: 40px;
+    color: white;
+}
+
+.btn-banner {
+    display: inline-block;
+    background: white;
+    color: #ed2739;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-banner:hover {
+    transform: scale(1.05);
+    background: #f8f9fa;
+    color: #c41e2d;
+}
+
+footer {
+    background-color: #ffffff;
+}
+
+.footer-circle-decoration {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.15;
+    transform: translate(30%, -30%);
+    z-index: 1;
+}
+
+.footer-phone-mockup i {
+    font-size: 160px;
+    opacity: 0.2;
+    display: inline-block;
+    transform: rotate(5deg);
+    transition: all 0.5s ease;
+}
+
+.row.rounded-5:hover .footer-phone-mockup i {
+    opacity: 0.4;
+    transform: rotate(0deg) scale(1.05);
+}
+
+.store-badge:hover {
+    transform: translateY(-3px);
+    transition: 0.3s;
+}
+
+.footer-links li a:hover {
+    color: #ed2739 !important;
+}
+
+/* ==================== */
+/* 8. RESPONSIVE */
+/* ==================== */
+@media (max-width: 768px) {
+    .menu-card-image { height: 150px; }
+    .display-4 { font-size: 1.8rem; }
+    .promo-banner { padding: 25px; text-align: center; }
+    .hero-title { font-size: 2rem; }
+    .hero-section { min-height: 500px; padding: 60px 0; }
+    .category-icon-wrapper { width: 80px; height: 80px; }
+    .category-icon { width: 45px; height: 45px; }
+    .food-category-circle { width: 100px; height: 100px; }
+    .location-box-modern { margin: 0 20px; }
+    
+    .navbar-collapse {
+        position: static;
+        transform: none;
+        margin-top: 12px;
+    }
+    .navbar-nav {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 992px) and (min-width: 769px) {
+    .navbar-collapse {
+        position: static;
+        transform: none;
+    }
+}
+
+/* ==================== */
+/* 9. SCROLL ANIMATIONS */
+/* ==================== */
+.scroll-from-left {
+    opacity: 0;
+    transform: translateX(-80px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-from-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-from-right {
+    opacity: 0;
+    transform: translateX(80px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-from-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-fade-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scroll-zoom {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-zoom.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.scroll-fade {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.scroll-fade.visible {
+    opacity: 1;
+}
+
+/* ==================== */
+/* 10. UTILITIES & EXTRA */
 /* ==================== */
 .fw-800 { font-weight: 800; }
 .z-index-2 { z-index: 2; }
 .filter-white { filter: brightness(0) invert(1); }
 .grayscale { filter: grayscale(0.5); }
+
+/* Performance optimization */
+.hero-section::before, 
+.menu-card, 
+.category-card,
+.food-category-circle {
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+.navbar {
+    will-change: padding, background-color;
+}
+
+/* Error & Success Alert */
+.alert-premium {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border: none;
+    border-radius: 20px;
+    padding: 12px 18px;
+    color: #991b1b;
+    font-weight: 500;
+    font-size: 0.8rem;
+    border-left: 4px solid #ed2739;
+}
+
+.alert-info-premium {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: none;
+    border-radius: 20px;
+    padding: 12px 18px;
+    color: #1e40af;
+    font-weight: 500;
+    font-size: 0.75rem;
+    border-left: 4px solid #3b82f6;
+}
+
+/* Review Card */
+.review-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Stats Bar */
+.stats-bar {
+    background: white;
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #ed2739;
+    margin-bottom: 5px;
+}
+
+.stat-text {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
