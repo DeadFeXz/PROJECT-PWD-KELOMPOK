@@ -1,0 +1,51 @@
+/* ==================== */
+/* 1. RESET & BASE      */
+/* ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button, input, select, textarea {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* ==================== */
+/* 2. BUTTONS & UTILS   */
+/* ==================== */
+.btn-success {
+    background-color: #ed2739 !important;
+    border-color: #ed2739 !important;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: #fff !important;
+}
+
+.btn-success:hover {
+    background-color: #c41e2d !important;
+    border-color: #c41e2d !important;
+    transform: scale(1.05);
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* ==================== */
+/* 3. UTILITIES & EXTRA */
+/* ==================== */
+.fw-800 { font-weight: 800; }
+.z-index-2 { z-index: 2; }
+.filter-white { filter: brightness(0) invert(1); }
+.grayscale { filter: grayscale(0.5); }
