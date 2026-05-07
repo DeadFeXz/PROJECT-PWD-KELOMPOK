@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             overflow: hidden;
         }
         
-        /* Animated Background Elements */
+        /* Animasi background */
         body::before {
             content: '';
             position: absolute;
@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             50% { transform: translateY(-30px) rotate(10deg); }
         }
         
-        /* Main Login Card - FULL FIT WITHOUT SCROLL */
+        /* Main Login Card  */
         .login-container {
             position: relative;
             z-index: 2;
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             transition: all 0.4s ease;
         }
         
-        /* Logo Section - COMPACT */
+        /* Logo Section -  */
         .logo-section {
             text-align: center;
             margin-bottom: 20px;
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 0;
         }
         
-        /* Welcome Text - COMPACT */
+        /* Welcome Text  */
         .welcome-text {
             text-align: center;
             margin-bottom: 18px;
@@ -225,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin: 0;
         }
         
-        /* Form Styling - COMPACT */
+        /* Form Styling  */
         .form-group {
             margin-bottom: 14px;
         }
@@ -277,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 0 0 3px rgba(237, 39, 57, 0.1);
         }
         
-        /* Options Row - COMPACT */
+        /* Options Row */
         .options-row {
             display: flex;
             justify-content: space-between;
@@ -316,7 +316,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
         
-        /* Button Styles - COMPACT */
+        /* Button Styles  */
         .btn-login {
             width: 100%;
             padding: 12px;
@@ -384,7 +384,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #fff5f5;
         }
         
-        /* Divider - COMPACT */
+        /* Divider - */
         .divider {
             display: flex;
             align-items: center;
@@ -406,7 +406,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             font-weight: 500;
         }
         
-        /* Social Login - COMPACT */
+        /* Social Login - */
         .social-login {
             display: flex;
             gap: 12px;
@@ -437,7 +437,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             box-shadow: 0 4px 12px rgba(237, 39, 57, 0.15);
         }
         
-        /* Register Link - COMPACT */
+        /* Register Link  */
         .register-link {
             text-align: center;
             margin-top: 15px;
@@ -463,7 +463,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-decoration: underline;
         }
         
-        /* Alert Styling - COMPACT */
+        /* Alert Styling  */
         .alert-premium {
             background: linear-gradient(135deg, #fef2f2, #fee2e2);
             border: none;
@@ -481,7 +481,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 0.5rem;
         }
         
-        /* Animation */
+        /* Animasi */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -525,7 +525,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
         
-        /* Untuk layar sangat pendek (max-height 650px) - tetap full tanpa scroll */
+        /* Untuk layar sangat pendek (max-height 650px) */
         @media (max-height: 700px) {
             .login-card {
                 padding: 20px 36px;
