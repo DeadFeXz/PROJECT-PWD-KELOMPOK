@@ -184,7 +184,194 @@ button, input, select, textarea {
 }
 
 /* ==================== */
-/* 3. BUTTONS & UTILS */
+/* 3. HERO SECTION */
+/* ==================== */
+.hero-section {
+    min-height: 600px;
+    padding: 100px 0;
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('./assets/bg\ makanan.png');
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    animation: slowZoom 20s ease-in-out infinite alternate;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes slowZoom {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    margin-bottom: 2rem;
+}
+
+/* ==================== */
+/* 4. CATEGORY SECTION */
+/* ==================== */
+.category-section {
+    padding: 60px 0;
+    background: white;
+}
+
+.category-card {
+    text-align: center;
+    padding: 20px 15px;
+    border-radius: 24px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    background: white;
+    position: relative;
+}
+
+.category-icon-wrapper {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 15px;
+    background: linear-gradient(135deg, #fff5f5, #ffe0e0);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover .category-icon-wrapper {
+    background: linear-gradient(135deg, #ed2739, #ff6b6b);
+    transform: scale(1.05);
+}
+
+.category-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover .category-icon {
+    filter: brightness(0) invert(1);
+}
+
+.category-name {
+    font-weight: 700;
+    color: #333;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.category-badge {
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    background: #ed2739;
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+/* ==================== */
+/* 5. FOOD CATEGORIES */
+/* ==================== */
+.food-category-wrapper {
+    text-align: center;
+    cursor: pointer;
+}
+
+.food-category-circle {
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 15px;
+    position: relative;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 3px;
+    transition: all 0.3s ease;
+}
+
+.food-category-circle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.food-category-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    background: white;
+}
+
+.food-category-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.food-category-circle:hover .food-category-inner img {
+    transform: scale(1.1);
+}
+
+.food-category-name {
+    font-weight: 700;
+    color: #333;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.food-category-count {
+    font-size: 0.8rem;
+    color: #ed2739;
+    font-weight: 600;
+}
+
+/* Gradient variants */
+.food-category-circle[data-category="1"] { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.food-category-circle[data-category="2"] { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.food-category-circle[data-category="3"] { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+.food-category-circle[data-category="4"] { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+.food-category-circle[data-category="5"] { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+.food-category-circle[data-category="6"] { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+
+/* ==================== */
+/* 6. BUTTONS & UTILS */
 /* ==================== */
 .btn-success {
     background-color: #ed2739 !important;
@@ -200,195 +387,109 @@ button, input, select, textarea {
     transform: scale(1.05);
 }
 
-.btn-outline-success {
-    border-color: #ed2739 !important;
-    color: #ed2739 !important;
-}
-
-.btn-outline-success:hover {
-    background-color: #ed2739 !important;
-    color: white !important;
-}
-
-.btn-explore:hover {
-    background: #c41e2d;
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(237, 39, 57, 0.3);
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
 
 /* ==================== */
-/* 4. FILTER CATEGORIES */
+/* 7. FEATURE CARDS */
 /* ==================== */
-.filter-btn {
-    display: inline-block;
-    padding: 8px 20px;
-    border-radius: 50px;
-    border: 1px solid #ddd;
+.feature-card-modern {
     background: white;
-    color: #666;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: all 0.3s;
-    font-weight: 500;
-}
-
-.filter-btn:hover, .filter-btn.active {
-    background: #ed2739;
-    color: white;
-    border-color: #ed2739;
-}
-
-.filter-scroll-wrapper {
-    overflow-x: auto;
-    padding-bottom: 10px;
-}
-
-.filter-categories {
-    display: flex;
-    gap: 10px;
-    flex-wrap: nowrap;
-}
-
-/* ==================== */
-/* 5. MENU CARDS */
-/* ==================== */
-.menu-card {
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #f0f0f0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    border-radius: 28px;
+    padding: 32px 24px;
     position: relative;
-}
-
-.menu-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
-}
-
-.menu-card-image {
-    position: relative;
-    width: 100%;
-    height: 180px;
-    overflow: hidden;
-    display: block;
-}
-
-.menu-card-image img {
-    width: 100%;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(237, 39, 57, 0.1);
     height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.5s ease;
 }
 
-.menu-card:hover .menu-card-image img {
-    transform: scale(1.1);
+.feature-card-modern:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 45px rgba(237, 39, 57, 0.12);
 }
 
-.promo-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    background: #ed2739;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 11px;
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #ed2739, #c41e2d);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.feature-icon i { font-size: 32px; color: white; }
+
+.feature-icon-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.feature-number {
+    font-size: 2rem;
     font-weight: 800;
-    z-index: 10;
+    color: rgba(237, 39, 57, 0.1);
 }
 
-.menu-card-body {
-    padding: 16px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    background: white;
-}
-
-.menu-title {
-    font-size: 1.05rem;
+.feature-title {
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #222;
-    margin-bottom: 8px;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.rating {
-    color: #ff9800;
-    font-size: 0.85rem;
-    font-weight: 700;
-}
-
-.resto-name {
-    font-size: 0.85rem;
-    color: #777;
     margin-bottom: 12px;
+    color: #333;
+}
+
+.feature-desc {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.feature-stats {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    margin-top: auto;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ed2739;
     display: block;
 }
 
-.terjual {
+.stat-label {
     font-size: 0.75rem;
     color: #999;
 }
 
-.harga-asli {
-    text-decoration: line-through;
-    color: #adb5bd;
-    font-size: 0.8rem;
-    display: inline-block;
-    margin-right: 8px;
+.stats-bar {
+    background: white;
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-.harga {
-    color: #ed2739;
+.stat-number {
+    font-size: 2rem;
     font-weight: 800;
-    font-size: 1.1rem;
+    color: #ed2739;
+    margin-bottom: 5px;
 }
 
-.btn-pesan {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #ed2739;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: 0.3s;
-    border: none;
-    margin-top: 10px;
-}
-
-.btn-pesan:hover {
-    background: #c41e2d;
-    transform: translateY(-2px);
+.stat-text {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0;
 }
 
 /* ==================== */
-/* 6. HEMAT HERO SECTION */
-/* ==================== */
-.hemat-hero-section {
-    background: linear-gradient(135deg, #fff5f5, #ffe0e0);
-    padding: 60px 0;
-}
-
-/* ==================== */
-/* 7. PROMO BANNER & FOOTER */
+/* 8. PROMO BANNER & FOOTER */
 /* ==================== */
 .promo-banner {
     background: linear-gradient(135deg, #ed2739 0%, #c41e2d 100%);
@@ -454,18 +555,14 @@ footer {
 }
 
 /* ==================== */
-/* 8. RESPONSIVE */
+/* 9. RESPONSIVE */
 /* ==================== */
 @media (max-width: 768px) {
-    .menu-card-image { height: 150px; }
-    .display-4 { font-size: 1.8rem; }
-    .promo-banner { padding: 25px; text-align: center; }
     .hero-title { font-size: 2rem; }
     .hero-section { min-height: 500px; padding: 60px 0; }
     .category-icon-wrapper { width: 80px; height: 80px; }
     .category-icon { width: 45px; height: 45px; }
     .food-category-circle { width: 100px; height: 100px; }
-    .location-box-modern { margin: 0 20px; }
     
     .navbar-collapse {
         position: static;
@@ -487,7 +584,7 @@ footer {
 }
 
 /* ==================== */
-/* 9. SCROLL ANIMATIONS */
+/* 10. SCROLL ANIMATIONS */
 /* ==================== */
 .scroll-from-left {
     opacity: 0;
@@ -533,26 +630,14 @@ footer {
     transform: scale(1);
 }
 
-.scroll-fade {
-    opacity: 0;
-    transition: opacity 0.8s ease;
-}
-
-.scroll-fade.visible {
-    opacity: 1;
-}
-
 /* ==================== */
-/* 10. UTILITIES & EXTRA */
+/* 11. UTILITIES & EXTRA */
 /* ==================== */
 .fw-800 { font-weight: 800; }
 .z-index-2 { z-index: 2; }
-.filter-white { filter: brightness(0) invert(1); }
-.grayscale { filter: grayscale(0.5); }
 
 /* Performance optimization */
 .hero-section::before, 
-.menu-card, 
 .category-card,
 .food-category-circle {
     backface-visibility: hidden;
@@ -565,130 +650,277 @@ footer {
     will-change: padding, background-color;
 }
 
-/* Error & Success Alert */
-.alert-premium {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border: none;
-    border-radius: 20px;
-    padding: 12px 18px;
-    color: #991b1b;
-    font-weight: 500;
-    font-size: 0.8rem;
-    border-left: 4px solid #ed2739;
-}
-
-.alert-info-premium {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border: none;
-    border-radius: 20px;
-    padding: 12px 18px;
-    color: #1e40af;
-    font-weight: 500;
-    font-size: 0.75rem;
-    border-left: 4px solid #3b82f6;
-}
-
-/* Review Card */
-.review-card {
-    background: white;
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.review-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-}
-
-/* Stats Bar */
-.stats-bar {
-    background: white;
-    border-radius: 30px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.stat-number {
-    font-size: 2rem;
-    font-weight: 800;
-    color: #ed2739;
-    margin-bottom: 5px;
-}
-
-.stat-text {
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 0;
-}
-
 /* ==================== */
-/* 11. PROFILE PAGE STYLES */
+/* 12. ADDITIONAL CSS FOR upnfoodhemat.php */
 /* ==================== */
-.profile-container {
-    max-width: 800px;
-    margin: 50px auto;
-}
 
-.profile-card {
-    border-radius: 24px;
+/* Hemat Hero Section */
+.hemat-hero-section {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+    padding: 60px 0;
+    position: relative;
     overflow: hidden;
-    border: none;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
-.profile-header {
-    background: linear-gradient(135deg, #ed2739, #c41e2d);
-    color: white;
-    padding: 30px;
-    text-align: center;
+.hemat-hero-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: rgba(237, 39, 57, 0.1);
+    border-radius: 50%;
+    z-index: 0;
 }
 
-.profile-body {
-    padding: 30px;
+.hemat-hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 250px;
+    height: 250px;
+    background: rgba(237, 39, 57, 0.08);
+    border-radius: 50%;
+    z-index: 0;
 }
 
-.btn-save {
+.hemat-hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hemat-badge {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Filter Categories */
+.filter-scroll-wrapper {
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+}
+
+.filter-scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+}
+
+.filter-scroll-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.filter-scroll-wrapper::-webkit-scrollbar-thumb {
     background: #ed2739;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 30px;
-    color: white;
-    transition: all 0.3s ease;
+    border-radius: 10px;
 }
 
-.btn-save:hover {
+.filter-categories {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.filter-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #666;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #ed2739;
+    color: white;
+    border-color: #ed2739;
+    transform: translateY(-2px);
+}
+
+/* Menu Cards */
+.menu-card {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    border: 1px solid #f0f0f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.menu-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+.menu-card-image {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background: #f5f5f5;
+}
+
+.menu-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.menu-card:hover .menu-card-image img {
+    transform: scale(1.1);
+}
+
+.promo-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #ed2739;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.menu-card-body {
+    padding: 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: white;
+}
+
+.menu-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.rating {
+    color: #ff9800;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.rating i {
+    font-size: 0.75rem;
+}
+
+.resto-name {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.terjual {
+    font-size: 0.75rem;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.harga-asli {
+    text-decoration: line-through;
+    color: #adb5bd;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.harga {
+    color: #ed2739;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.btn-pesan {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #ed2739;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-pesan:hover {
     background: #c41e2d;
     transform: translateY(-2px);
-}
-
-.btn-delete {
-    background: #dc3545;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 30px;
     color: white;
-    transition: all 0.3s ease;
 }
 
-.btn-delete:hover {
-    background: #bb2d3b;
-    transform: translateY(-2px);
+/* Grayscale Utility */
+.grayscale {
+    filter: grayscale(0.5);
 }
 
-/* Alert styling konsisten dengan tema */
-.alert-success {
-    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-    border: none;
-    border-left: 4px solid #10b981;
-    border-radius: 16px;
+/* Responsive untuk Menu Cards */
+@media (max-width: 768px) {
+    .menu-card-image {
+        height: 150px;
+    }
+    
+    .hemat-hero-section {
+        padding: 40px 0;
+    }
+    
+    .hemat-hero-section .display-4 {
+        font-size: 1.8rem;
+    }
+    
+    .filter-btn {
+        padding: 6px 16px;
+        font-size: 0.85rem;
+    }
 }
 
-.alert-danger {
-    background: linear-gradient(135deg, #fee2e2, #fecaca);
-    border: none;
-    border-left: 4px solid #ef4444;
-    border-radius: 16px;
+@media (max-width: 576px) {
+    .menu-title {
+        font-size: 0.95rem;
+    }
+    
+    .harga {
+        font-size: 0.95rem;
+    }
+    
+    .btn-pesan {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
 }
