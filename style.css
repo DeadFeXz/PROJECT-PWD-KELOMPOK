@@ -246,7 +246,7 @@ button, input, select, textarea {
 /* ==================== */
 .category-section {
     padding: 60px 0;
-    background: white;
+    /* background: white; */
 }
 
 .category-card {
@@ -255,7 +255,7 @@ button, input, select, textarea {
     border-radius: 24px;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-    background: white;
+    /* background: white; */
     position: relative;
 }
 
@@ -431,9 +431,12 @@ button, input, select, textarea {
 }
 
 .feature-number {
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    color: rgba(237, 39, 57, 0.1);
+    background: linear-gradient(135deg, #ed2739, #ff8a95);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: .35;
 }
 
 .feature-title {
@@ -656,13 +659,13 @@ footer {
 
 /* Hemat Hero Section */
 .hemat-hero-section {
-    background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%);
+    /* background: linear-gradient(135deg, #fff5f5 0%, #ffe0e0 100%); */
     padding: 60px 0;
     position: relative;
     overflow: hidden;
 }
 
-.hemat-hero-section::before {
+/* .hemat-hero-section::before {
     content: '';
     position: absolute;
     top: -50%;
@@ -684,7 +687,7 @@ footer {
     background: rgba(237, 39, 57, 0.08);
     border-radius: 50%;
     z-index: 0;
-}
+} */
 
 .hemat-hero-section .container {
     position: relative;
