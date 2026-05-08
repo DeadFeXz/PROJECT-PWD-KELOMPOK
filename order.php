@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// ========== JOIN: Ambil data user ==========
+// JOIN: Ambil data user 
 $user_id = $_SESSION['user_id'];
 $sql_user = "SELECT * FROM users WHERE id = ?";
 $stmt_user = mysqli_prepare($conn, $sql_user);
@@ -21,7 +21,7 @@ $order_success = false;
 $order_error = false;
 $selected_menu = null;
 
-// ========== JOIN: Ambil data menu dari database ==========
+// JOIN: Ambil data menu dari database 
 $menu_items = [];
 $sql_menu_all = "SELECT * FROM menu ORDER BY id ASC";
 $result_menu_all = mysqli_query($conn, $sql_menu_all);
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $total_harga = $quantity * $harga;
         
-        // ========== INSERT dengan user_id (JOIN ke users) ==========
+        //  INSERT dengan user_id (JOIN ke users) 
         $sql = "INSERT INTO orders (user_id, menu_id, menu_nama, quantity, harga, total_harga, nama_pemesan, alamat, no_telpon, email, catatan, status) 
                 VALUES ($user_id, $menu_id, '$menu_nama', $quantity, $harga, $total_harga, '$nama_pemesan', '$alamat', '$no_telpon', '$email', '$catatan', 'pending')";
         
