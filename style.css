@@ -1501,3 +1501,155 @@ footer {
         padding: 12px 18px;
     }
 }
+
+/* ======================================================================== */
+/* =========================  MY-ORDERS.PHP =============================== */
+/* ======================================================================== */
+
+/* ==================== */
+/* 15. MY ORDERS PAGE STYLES */
+/* ==================== */
+
+.orders-container {
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.order-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.order-header {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.order-body {
+    padding: 20px;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-processing {
+    background: #cce5ff;
+    color: #004085;
+}
+
+.status-completed {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-cancelled {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.btn-cancel {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-cancel:hover {
+    background: #bb2d3b;
+    color: white;
+}
+
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+}
+
+.empty-orders i {
+    font-size: 80px;
+    color: #dee2e6;
+    margin-bottom: 20px;
+}
+
+.order-address {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 10px 15px;
+    margin-top: 10px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+}
+
+.stat-icon {
+    font-size: 35px;
+    color: #ed2739;
+    margin-bottom: 10px;
+}
+
+.active-red {
+    color: #ed2739 !important;
+    font-weight: 800 !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .orders-container {
+        margin: 30px auto;
+        padding: 0 10px;
+    }
+
+    .order-header {
+        gap: 10px;
+    }
+
+    .order-body {
+        padding: 15px;
+    }
+
+    .stat-card {
+        padding: 16px;
+    }
+
+    .empty-orders {
+        padding: 40px 15px;
+    }
+
+    .empty-orders i {
+        font-size: 60px;
+    }
+}
