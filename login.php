@@ -1,41 +1,62 @@
 <?php
 session_start();
+
+// Memanggil file koneksi database
 require_once 'config/database.php';
 
+//  CEK APAKAH SUDAH LOGIN 
 if (isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
+    header('Location: index.php'); // Redirect ke halaman index
+    exit; // Hentikan eksekusi kode (tidak boleh akses halaman login lagi)
 }
 
+// Variabel untuk menyimpan pesan error
 $error = '';
+
+//  PROSES LOGIN KETIKA FORM DISUBMIT 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // Membersihkan input username dari karakter berbahaya (SQL Injection)
     $username = mysqli_real_escape_string($conn, $_POST['username']);
+    
+    // Password TIDAK perlu di-escape karena akan dibandingkan langsung
     $password = $_POST['password'];
+
+    //  QUERY MENCARI USER 
 
     $sql = "SELECT * FROM users 
             WHERE username='$username' 
             OR email='$username'";
 
+    // Eksekusi query
     $result = mysqli_query($conn, $sql);
+    
+    // Ambil data user (hanya 1 baris, karena username/email seharusnya unik)
     $user = mysqli_fetch_assoc($result);
 
+    //  VALIDASI LOGIN 
+    // Cek apakah user ditemukan DAN password cocok
     if ($user && $password === $user['password']) {
 
-        $_SESSION['user_id']      = $user['id'];
-        $_SESSION['username']     = $user['username'];
-        $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
-        $_SESSION['email']        = $user['email'];
+        //  SIMPAN DATA KE SESSION 
+        // Setelah login berhasil, simpan data user ke session
+        $_SESSION['user_id']      = $user['id'];          
+        $_SESSION['username']     = $user['username'];    
+        $_SESSION['nama_lengkap'] = $user['nama_lengkap']; 
+        $_SESSION['email']        = $user['email'];       
 
+        //  REDIRECT SETELAH LOGIN 
         $redirect = isset($_GET['redirect'])
-            ? $_GET['redirect']
-            : 'index.php';
+            ? $_GET['redirect']    // Jika ada, pindah ke halaman tersebut
+            : 'index.php';         // Jika tidak, pindah ke index.php
 
+        // Pindahkan user ke halaman yang dituju
         header("Location: $redirect");
-        exit;
+        exit; 
 
     } else {
+        // Jika login gagal (user tidak ditemukan ATAU password salah)
         $error = "Username/email atau password salah!";
     }
 }

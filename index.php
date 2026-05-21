@@ -5,11 +5,13 @@ require_once 'config/database.php';
 // Mendapatkan nama file untuk logika garis merah di navbar
 $current_page = basename($_SERVER['PHP_SELF']);
 
+// Inisialisasi variabel notifikasi registe
 $register_success = false;
+// Cek apakah URL mengandung parameter 'register' dengan nilai 'success'
 if (isset($_GET['register']) && $_GET['register'] == 'success') {
+    // Jika ya, ubah nilai menjadi true (tampilkan notifikasi sukses)
     $register_success = true;
 }
-
 
 ?>
 

@@ -34,10 +34,20 @@ while ($row = mysqli_fetch_assoc($result)) {
     $menu_items[] = $row;
 }
 
-// Filter menu berdasarkan kategori
+//  MENYIAPKAN DATA MENU YANG AKAN DIFILTER 
 $filtered_menu = $menu_items;
+
+// CEK APAKAH PERLU FILTER 
+// Jika filter TIDAK sama dengan 'all' (artinya user memilih kategori tertentu)
 if ($filter !== 'all') {
+    
+    //  LAKUKAN FILTER 
+    // array_filter() = fungsi PHP untuk menyaring array
+    // function($item) use ($filter) = fungsi anonim (closure) yang bisa mengakses variabel $filter dari luar
     $filtered_menu = array_filter($menu_items, function($item) use ($filter) {
+        // Bandingkan kategori item dengan filter yang dipilih user
+        // Jika sama, item dimasukkan ke hasil filter
+        // Jika beda, item dibuang
         return $item['kategori'] === $filter;
     });
 }
