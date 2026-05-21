@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $row['image'] = $row['gambar'];
     } else {
         // generate dari nama
-        $row['image'] = 'assets/' . strtolower(str_replace(' ', ' ', $row['nama'])) . '.png';
+        $row['image'] = 'assets/' . strtolower(str_replace(' ', '', $row['nama'])) . '.png';
     }
     
     $menu_items[] = $row;

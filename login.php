@@ -76,11 +76,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- error -->
         <?php if($error): ?>
-            <div class="error-box">
-                <i class="bi bi-exclamation-triangle-fill"></i>
-                <?= $error ?>
-            </div>
-        <?php endif; ?>
+    <div class="popup-overlay">
+        <div class="popup-box">
+            <i class="bi bi-exclamation-triangle-fill popup-icon"></i>
+            <h3>Pendaftaran Gagal</h3>
+            <p><?= $error ?></p>
+
+            <a href="login.php" class="popup-btn">
+                Tutup
+            </a>
+        </div>
+    </div>
+    <?php endif; ?>
 
         <!-- form -->
         <form method="POST">

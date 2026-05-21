@@ -10,8 +10,7 @@ if (isset($_GET['register']) && $_GET['register'] == 'success') {
     $register_success = true;
 }
 
-// Ambil menu dari database
-$menus = fetchAll("SELECT * FROM menu LIMIT 6");
+
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +119,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
 
     <!-- SECTION IDE -->
     <section class="container py-5 category-section">
-        <div class="scroll-from-left">
+        <div class="">
             <h2 class="text-center fw-bold mb-5">Belom ada ide? Mulai dari sini aja dulu</h2>
         </div>
         <div class="row g-4 text-center">
@@ -134,7 +133,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
                 ['name' => '24 jam', 'img' => 'assets/24 jam.png', 'badge' => '24/7']
             ];
             foreach ($ide as $index => $item) : ?>
-                <div class="col-6 col-md-2 scroll-from-left" data-delay="<?= $index * 0.1 ?>">
+                <div class="col-6 col-md-2 ">
                     <div class="category-card">
                         <div class="category-icon-wrapper">
                             <img src="<?= $item['img'] ?>" alt="<?= $item['name'] ?>" class="category-icon">
@@ -151,7 +150,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
 
     <!-- SECTION KULINER -->
     <section class="container py-5">
-        <div class="scroll-from-right">
+        <div class="">
             <h2 class="text-center fw-bold mb-5">Aneka kuliner menarik</h2>
         </div>
         <div class="row g-4 justify-content-center text-center">
@@ -165,7 +164,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
                 ['name' => 'Cepat saji', 'img' => 'assets/cepatsaji.png', 'count' => '312 restoran']
             ];
             foreach ($kuliner as $index => $k) : ?>
-                <div class="col-4 col-md-2 scroll-from-right" data-delay="<?= $index * 0.1 ?>">
+                <div class="col-4 col-md-2">
                     <div class="food-category-wrapper">
                         <div class="food-category-circle" data-category="<?= $index + 1 ?>">
                             <div class="food-category-inner">
@@ -178,7 +177,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
                 </div>
             <?php endforeach; ?>
         </div>
-        <div class="text-center mt-4 scroll-from-right">
+        <div class="text-center mt-4 ">
             <button class="btn btn-outline-success rounded-pill px-4 fw-bold">
                 <i class="bi bi-grid-3x3-gap-fill me-2"></i>Tampilkan kuliner lainnya
             </button>
@@ -188,7 +187,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
     <!-- SECTION WHY UPNFOOD -->
     <section class="why-upnfood-section py-5">
         <div class="container">
-            <div class="text-center mb-5 scroll-fade-up">
+            <div class="text-center mb-5">
                 <span class="section-badge">WHY UPNFOOD?</span>
                 <h2 class="section-title fw-bold">Kenapa beli pakai <span class="text-danger">UpnFood</span>?</h2>
                 <p class="section-subtitle text-muted">Nikmati pengalaman memesan makanan terbaik hanya di UpnFood</p>
@@ -203,7 +202,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
                     ['icon' => 'bi-shield-check', 'title' => 'Diantar aman & cepat', 'desc' => 'Driver profesional dengan sistem tracking real-time yang akurat', 'stat' => '15-30 min', 'stat_label' => 'Estimasi']
                 ];
                 foreach ($features as $index => $feature) : ?>
-                    <div class="col-md-6 col-lg-3 scroll-fade-up" data-delay="<?= $index * 0.1 ?>">
+                    <div class="col-md-6 col-lg-3 ">
                         <div class="feature-card-modern">
                             <div class="feature-icon-wrapper">
                                 <div class="feature-icon">
@@ -223,7 +222,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
             </div>
             
             <!-- Additional Stats Bar animasi zoom -->
-            <div class="stats-bar mt-5 scroll-zoom">
+            <div class="stats-bar mt-5">
                 <div class="row text-center g-4">
                     <div class="col-6 col-md-3">
                         <div class="stat-item">

@@ -113,12 +113,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Gabung Komunitas kuliner</p>
         </div>
 
-        <?php if($error): ?>
-            <div class="error-box">
-                <i class="bi bi-exclamation-triangle-fill"></i>
-                <?= $error ?>
-            </div>
-        <?php endif; ?>
+       <?php if($error): ?>
+    <div class="popup-overlay">
+        <div class="popup-box">
+            <i class="bi bi-exclamation-triangle-fill popup-icon"></i>
+            <h3>Pendaftaran Gagal</h3>
+            <p><?= $error ?></p>
+
+            <a href="register.php" class="popup-btn">
+                Tutup
+            </a>
+        </div>
+    </div>
+    <?php endif; ?>
 
         <form method="POST">
 

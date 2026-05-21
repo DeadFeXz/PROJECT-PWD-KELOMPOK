@@ -35,6 +35,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
+// Ganti password
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
+    $current = $_POST['current_password'];
+    $new = $_POST['new_password'];
+    $confirm = $_POST['confirm_password'];
+    
+    if (password_verify($current, $user['password'])) {
+        if ($new === $confirm) {
+            if (strlen($new) >= 4) {
+                $hashed = password_hash($new, PASSWORD_DEFAULT);
+                mysqli_query($conn, "UPDATE users SET password = '$hashed' WHERE id = $user_id");
+                $success = "Password berhasil diubah!";
+            } else {
+                $error = "Password baru minimal 4 karakter!";
+            }
+        } else {
+            $error = "Password baru tidak cocok!";
+        }
+    } else {
+        $error = "Password saat ini salah!";
+    }
+}
+
 // Hapus akun
 if (isset($_GET['delete'])) {
     mysqli_query($conn, "DELETE FROM users WHERE id = $user_id");
@@ -204,9 +227,35 @@ if (isset($_GET['delete'])) {
             
             <hr class="my-4">
             
+            <!-- Form Ganti Password -->
+            <h5 class="fw-bold mb-3"><i class="bi bi-key me-2 text-danger"></i> Ganti Password</h5>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Password Saat Ini</label>
+                    <input type="password" name="current_password" class="form-control" required 
+                        placeholder="Masukkan password Anda saat ini">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password Baru</label>
+                    <input type="password" name="new_password" class="form-control" required 
+                        placeholder="Minimal 4 karakter">
+                    <small class="text-muted">Minimal 4 karakter</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Konfirmasi Password Baru</label>
+                    <input type="password" name="confirm_password" class="form-control" required 
+                        placeholder="Ketik ulang password baru Anda">
+                </div>
+                <button type="submit" name="change_password" class="btn btn-warning rounded-pill px-4">
+                    <i class="bi bi-shield-lock"></i> Ganti Password
+                </button>
+            </form>
+            
+            <hr class="my-4">
+            
             <!-- Hapus Akun -->
             <div class="text-center">
-                <p class="text-muted small"> Menghapus akun akan menghapus semua data Anda secara permanen</p>
+                <p class="text-muted small">⚠️ Menghapus akun akan menghapus semua data Anda secara permanen</p>
                 <a href="?delete=1" class="btn btn-delete text-white rounded-pill px-4" onclick="return confirm('Yakin ingin menghapus akun? Data tidak bisa dikembalikan!')">
                     <i class="bi bi-trash"></i> Hapus Akun
                 </a>
