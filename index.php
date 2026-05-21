@@ -54,9 +54,6 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
                         UpnFood HEMAT <span class="badge bg-danger rounded-pill">Baru</span>
                     </a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link fw-bold <?= ($current_page == 'rekomendasi.php') ? 'active-red' : '' ?>" href="rekomendasi.php">Rekomendasi</a>
-                </li> -->
             </ul>
         </div>
         
@@ -256,7 +253,7 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
         </div>
     </section>
 
-     <footer class="bg-white pt-5 mt-5 border-top position-relative overflow-hidden">
+    <footer class="bg-white pt-5 mt-5 border-top position-relative overflow-hidden">
         <div class="footer-circle-decoration d-none d-lg-block"></div>
 
         <div class="container position-relative z-index-2">
@@ -345,183 +342,5 @@ $menus = fetchAll("SELECT * FROM menu LIMIT 6");
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- SCROLL ANIMATION JAVASCRIPT -->
-    <script>
-        (function() {
-            // Tambahkan CSS tambahan untuk redesign elements
-            const style = document.createElement('style');
-            style.textContent = `
-                /* Additional styles for new redesign elements */
-                .section-badge {
-                    display: inline-block;
-                    background: linear-gradient(135deg, #ed2739, #ff6b6b);
-                    color: white;
-                    padding: 5px 15px;
-                    border-radius: 50px;
-                    font-size: 0.8rem;
-                    font-weight: 600;
-                    margin-bottom: 15px;
-                }
-                
-                .section-title {
-                    font-size: 2.5rem;
-                    margin-bottom: 1rem;
-                }
-                
-                .feature-icon-wrapper {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: flex-start;
-                    margin-bottom: 20px;
-                }
-                
-                .feature-number {
-                    font-size: 2rem;
-                    font-weight: 800;
-                    color: rgba(237, 39, 57, 0.1);
-                }
-                
-                .feature-title {
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                    margin-bottom: 12px;
-                    color: #333;
-                }
-                
-                .feature-desc {
-                    color: #666;
-                    font-size: 0.9rem;
-                    line-height: 1.5;
-                    margin-bottom: 15px;
-                }
-                
-                .feature-stats {
-                    border-top: 1px solid #eee;
-                    padding-top: 12px;
-                    margin-top: auto;
-                }
-                
-                .stat-value {
-                    font-size: 1.1rem;
-                    font-weight: 800;
-                    color: #ed2739;
-                    display: block;
-                }
-                
-                .stat-label {
-                    font-size: 0.75rem;
-                    color: #999;
-                }
-                
-                .stats-bar {
-                    background: white;
-                    border-radius: 30px;
-                    padding: 30px;
-                    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-                }
-                
-                .stat-number {
-                    font-size: 2rem;
-                    font-weight: 800;
-                    color: #ed2739;
-                    margin-bottom: 5px;
-                }
-                
-                .stat-text {
-                    color: #666;
-                    font-size: 0.9rem;
-                    margin-bottom: 0;
-                }
-                
-                /* Hero section animation */
-                .hero-section {
-                    animation: fadeInZoom 0.8s ease-out;
-                }
-                
-                @keyframes fadeInZoom {
-                    from {
-                        opacity: 0;
-                        transform: scale(0.95);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: scale(1);
-                    }
-                }
-                
-                /* Navbar scroll effect */
-                #mainNavbar {
-                    transition: all 0.3s ease;
-                }
-                
-                #mainNavbar.scrolled {
-                    background: rgba(255, 255, 255, 0.98) !important;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                    padding: 8px 0;
-                }
-                
-                /* Delay untuk efek berurutan */
-                [data-delay] {
-                    transition-delay: attr(data-delay s);
-                }
-            `;
-            document.head.appendChild(style);
-            
-            // Fungsi untuk mengecek elemen visible
-            function checkVisibility() {
-                const elements = document.querySelectorAll(
-                    '.scroll-from-left, .scroll-from-right, .scroll-fade-up, .scroll-zoom, .scroll-fade'
-                );
-                
-                const windowHeight = window.innerHeight;
-                
-                elements.forEach(element => {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top < windowHeight - 100 && rect.bottom > 100) {
-                        element.classList.add('visible');
-                    }
-                });
-            }
-            
-            // Fungsi untuk menambahkan delay dinamis
-            function applyDelays() {
-                document.querySelectorAll('[data-delay]').forEach(el => {
-                    const delay = el.getAttribute('data-delay');
-                    el.style.transitionDelay = delay + 's';
-                });
-            }
-            
-            // Navbar scroll effect
-            function checkNavbar() {
-                const navbar = document.getElementById('mainNavbar');
-                if (navbar) {
-                    if (window.scrollY > 50) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                }
-            }
-            
-            // Jalankan saat load
-            window.addEventListener('load', function() {
-                applyDelays();
-                checkVisibility();
-                checkNavbar();
-            });
-            
-            // Jalankan saat scroll
-            window.addEventListener('scroll', function() {
-                checkVisibility();
-                checkNavbar();
-            });
-            
-            // Jalankan saat resize
-            window.addEventListener('resize', function() {
-                checkVisibility();
-            });
-        })();
-    </script>
 </body>
 </html>

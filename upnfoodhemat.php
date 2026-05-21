@@ -82,9 +82,6 @@ if ($filter !== 'all') {
                             UpnFood HEMAT <span class="badge bg-danger rounded-pill">Baru</span>
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link fw-bold <?= ($current_page == 'rekomendasi.php') ? 'active-red' : '' ?>" href="rekomendasi.php">Rekomendasi</a>
-                    </li> -->
                 </ul>
             </div>
             
@@ -251,7 +248,6 @@ if ($filter !== 'all') {
                     <ul class="list-unstyled text-muted footer-links">
                         <li class="mb-2"><a href="index.php" class="text-decoration-none text-muted">Beranda</a></li>
                         <li class="mb-2"><a href="upnfoodhemat.php" class="text-decoration-none text-muted fw-bold text-danger">UpnFood HEMAT</a></li>
-                        
                     </ul>
                 </div>
 
@@ -297,50 +293,5 @@ if ($filter !== 'all') {
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Scroll Animation Script -->
-    <script>
-        (function() {
-            function checkVisibility() {
-                const elements = document.querySelectorAll(
-                    '.scroll-from-left, .scroll-from-right, .scroll-fade-up, .scroll-zoom, .scroll-fade'
-                );
-                
-                const windowHeight = window.innerHeight;
-                
-                elements.forEach(element => {
-                    const rect = element.getBoundingClientRect();
-                    if (rect.top < windowHeight - 100 && rect.bottom > 100) {
-                        element.classList.add('visible');
-                    }
-                });
-            }
-            
-            function checkNavbar() {
-                const navbar = document.getElementById('mainNavbar');
-                if (navbar) {
-                    if (window.scrollY > 50) {
-                        navbar.classList.add('scrolled');
-                    } else {
-                        navbar.classList.remove('scrolled');
-                    }
-                }
-            }
-            
-            window.addEventListener('load', function() {
-                checkVisibility();
-                checkNavbar();
-            });
-            
-            window.addEventListener('scroll', function() {
-                checkVisibility();
-                checkNavbar();
-            });
-            
-            window.addEventListener('resize', function() {
-                checkVisibility();
-            });
-        })();
-    </script>
 </body>
 </html>
