@@ -477,11 +477,93 @@ if (isset($_GET['msg'])) {
     <?php endif; ?>
 </div>
 
-<footer class="bg-white pt-5 mt-5 border-top">
-    <div class="container text-center py-4">
-        <p class="mb-0 text-muted small">© 2026 UpnFood | Merek milik Universitas Pembangunan Nasional.</p>
-    </div>
-</footer>
+<footer class="bg-white pt-5 mt-5 border-top position-relative overflow-hidden">
+        <div class="footer-circle-decoration d-none d-lg-block"></div>
+
+        <div class="container position-relative z-index-2">
+            <div class="row bg-danger rounded-5 p-4 p-md-5 mb-5 align-items-center text-white overflow-hidden position-relative shadow-lg">
+                <div class="col-lg-7">
+                    <h2 class="fw-800 mb-3">Makin Hemat Pakai Aplikasi <span class="text-warning">UpnFood</span></h2>
+                    <p class="lead opacity-90 mb-4">Dapatkan promo eksklusif, pelacakan pesanan real-time, dan gratis ongkir khusus pengguna aplikasi pertama kali!</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#" class="store-badge">
+                            <img src="assets/gplay.png" alt="Play Store" height="45">
+                        </a>
+                        <a href="#" class="store-badge">
+                            <img src="assets/appstoree.png" alt="App Store" height="45">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block text-end footer-phone-mockup">
+                    <i class="bi bi-phone-vibrate text-white"></i>
+                </div>
+            </div>
+
+            <div class="row g-4 mb-5">
+                <div class="col-lg-4 col-md-6">
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="assets/upnvylogo.png" alt="Logo" height="50">
+                        <div class="ms-3">
+                            <h4 class="fw-800 mb-0 text-danger">UpnFood</h4>
+                            <small class="text-muted fw-bold">Solusi Makan Civitas UPN</small>
+                        </div>
+                    </div>
+                    <p class="text-muted pe-lg-4">Platform pesan antar makanan resmi untuk memudahkan mahasiswa dan dosen mendapatkan asupan energi terbaik tanpa ribet.</p>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="#" class="filter-btn active rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="filter-btn rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-tiktok"></i></a>
+                        <a href="#" class="filter-btn rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-facebook"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-800 text-dark mb-4">Navigasi</h6>
+                    <ul class="list-unstyled text-muted footer-links">
+                        <li class="mb-2"><a href="index.php" class="text-decoration-none text-muted">Beranda</a></li>
+                        <li class="mb-2"><a href="upnfoodhemat.php" class="text-decoration-none text-muted fw-bold text-danger">UpnFood HEMAT</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-6">
+                    <h6 class="fw-800 text-dark mb-4">Bantuan</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Pusat Bantuan</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Cara Pesan</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-decoration-none text-muted">Kontak</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4">
+                    <h6 class="fw-800 text-dark mb-4">Lokasi Kami</h6>
+                    <div class="d-flex mb-3">
+                        <i class="bi bi-geo-alt-fill text-danger fs-5 me-3"></i>
+                        <p class="text-muted small mb-0">Kampus Terpadu UPN "Veteran" Yogyakarta, Jl. SWK Jl. Ring Road Utara, Condongcatur, Sleman.</p>
+                    </div>
+                    <div class="d-flex align-items-center bg-light p-3 rounded-4">
+                        <i class="bi bi-headset text-danger fs-3 me-3"></i>
+                        <div>
+                            <small class="d-block text-muted">Butuh bantuan cepat?</small>
+                            <span class="fw-bold text-dark">+62 812-3456-7890</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="py-4 border-top">
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-center text-md-start">
+                        <p class="mb-0 text-muted small">© 2026 <span class="fw-bold text-danger">UpnFood</span>. Merek milik Universitas Pembangunan Nasional.</p>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                        <img src="assets/upnvylogo.png" alt="UPN" height="25" class="opacity-50 grayscale me-3">
+                        <a href="#" class="text-decoration-none text-muted small me-3">Terms</a>
+                        <a href="#" class="text-decoration-none text-muted small">Privacy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
