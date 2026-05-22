@@ -1490,17 +1490,7 @@ html, body {
 }
 
 /* Alerts specific */
-.alert-premium {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border: none;
-    border-radius: 20px;
-    padding: 8px 15px;
-    color: #991b1b;
-    font-weight: 500;
-    font-size: 0.7rem;
-    margin-bottom: 15px;
-    border-left: 4px solid var(--primary-red);
-}
+
 
 .alert-info-premium {
     background: linear-gradient(135deg, #eff6ff, #dbeafe);
