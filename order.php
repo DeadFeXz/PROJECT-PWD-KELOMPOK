@@ -50,7 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $errors = [];
     if (empty($nama_pemesan)) $errors[] = "Nama pemesan harus diisi";
     if (empty($alamat)) $errors[] = "Alamat harus diisi";
-    if (empty($no_telpon)) $errors[] = "No telpon harus diisi";
+    
+    // Validasi No Telpon yang diperbaiki
+    if (empty($no_telpon)) {
+        $errors[] = "No telpon harus diisi";
+    } elseif (!preg_match('/^[0-9\-\+\s]{8,15}$/', $no_telpon)) {
+        $errors[] = "No telpon tidak valid! Minimal 8 digit, maksimal 15 digit. Hanya boleh berisi angka, +, -, dan spasi.";
+    }
+    
     if (empty($email)) $errors[] = "Email harus diisi";
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "Format email tidak valid";
     if ($quantity < 1) $errors[] = "Jumlah pesanan minimal 1";
@@ -112,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="logo-section">
                 <div class="logo-wrapper">
                     <img src="assets/upnvylogo.png" alt="Logo">
-                    <h2>UPNFOOD</h2>
+                    <h2></h2>
                 </div>
                
                 <p>Hi, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</p>
@@ -203,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label class="form-label required-field"><i class="bi bi-telephone"></i> No Telpon</label>
                                     <div class="input-group-modern">
                                         <i class="bi bi-telephone input-icon"></i>
-                                        <input type="tel" class="form-control-modern" name="no_telpon" value="<?= htmlspecialchars($user_data['no_telpon'] ?? '') ?>" required>
+                                        <input type="tel" class="form-control-modern" name="no_telpon" value="<?= htmlspecialchars($user_data['no_telpon'] ?? '') ?>" maxlength="15" placeholder="08123456789 atau +628123456789" required>
                                     </div>
                                 </div>
                             </div>

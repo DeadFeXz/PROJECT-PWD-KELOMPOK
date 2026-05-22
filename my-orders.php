@@ -218,37 +218,40 @@ if (isset($_GET['msg'])) {
                 </div>
             </div>
             <div class="order-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <h5 class="fw-bold mb-2"><?= htmlspecialchars($order['menu_nama']) ?></h5>
-                        <p class="text-muted mb-1">
-                            <i class="bi bi-cart"></i> <?= $order['quantity'] ?> porsi
-                        </p>
-                        <p class="text-muted mb-1">
-                            <i class="bi bi-telephone"></i> <?= htmlspecialchars($order['no_telpon']) ?>
-                        </p>
-                        <div class="order-address">
-                            <i class="bi bi-geo-alt text-danger me-1"></i>
-                            <small><?= htmlspecialchars($order['alamat']) ?></small>
-                        </div>
-                        <?php if(!empty($order['catatan'])): ?>
-                            <p class="text-muted mb-0 mt-2">
-                                <i class="bi bi-chat"></i> Catatan: <?= htmlspecialchars($order['catatan']) ?>
-                            </p>
-                        <?php endif; ?>
+            <div class="row">
+                <div class="col-md-8">
+                    <p class="mb-1">
+                        <i class="bi bi-shop"></i> <?= htmlspecialchars($order['resto_name'] ?? 'UpnFood Official') ?>
+                    </p>
+                    <h5 class="fw-bold mb-2"><?= htmlspecialchars($order['menu_nama']) ?></h5>
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-cart"></i> <?= $order['quantity'] ?> porsi
+                    </p>
+                    <p class="text-muted mb-1">
+                        <i class="bi bi-telephone"></i> <?= htmlspecialchars($order['no_telpon']) ?>
+                    </p>
+                    <div class="order-address">
+                        <i class="bi bi-geo-alt text-danger me-1"></i>
+                        <small><?= htmlspecialchars($order['alamat']) ?></small>
                     </div>
-                    <div class="col-md-4 text-md-end">
-                        <h5 class="text-danger fw-bold mb-2">
-                            Rp <?= number_format($order['total_harga'], 0, ',', '.') ?>
-                        </h5>
-                        <?php if($order['status'] == 'pending'): ?>
-                            <a href="?cancel=1&id=<?= $order['id'] ?>" class="btn-cancel" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')">
-                                <i class="bi bi-x-circle"></i> Batalkan
-                            </a>
-                        <?php endif; ?>
-                    </div>
+                    <?php if(!empty($order['catatan'])): ?>
+                        <p class="text-muted mb-0 mt-2">
+                            <i class="bi bi-chat"></i> Catatan: <?= htmlspecialchars($order['catatan']) ?>
+                        </p>
+                    <?php endif; ?>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <h5 class="text-danger fw-bold mb-2">
+                        Rp <?= number_format($order['total_harga'], 0, ',', '.') ?>
+                    </h5>
+                    <?php if($order['status'] == 'pending'): ?>
+                        <a href="?cancel=1&id=<?= $order['id'] ?>" class="btn-cancel" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')">
+                            <i class="bi bi-x-circle"></i> Batalkan
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
+        </div>
         </div>
         <?php endforeach; ?>
     <?php else: ?>
