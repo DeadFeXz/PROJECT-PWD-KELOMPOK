@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="popup-overlay">
         <div class="popup-box">
             <i class="bi bi-exclamation-triangle-fill popup-icon"></i>
-            <h3>Pendaftaran Gagal</h3>
+            <h3>Login Gagal</h3>
             <p><?= $error ?></p>
 
             <a href="login.php" class="popup-btn">

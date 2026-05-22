@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <label class="form-label required-field"><i class="bi bi-person-circle"></i> Nama Pemesan</label>
                                     <div class="input-group-modern">
                                         <i class="bi bi-person input-icon"></i>
-                                        <input type="text" class="form-control-modern" name="nama_pemesan" value="<?= htmlspecialchars($_SESSION['nama_lengkap']) ?>" required>
+                                        <input type="text" class="form-control-modern " name="nama_pemesan" value="<?= htmlspecialchars($_SESSION['nama_lengkap']) ?>" required>
                                     </div>
                                 </div>
                             </div>
