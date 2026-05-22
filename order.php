@@ -109,19 +109,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/id/0/0d/Logo_Universitas_Pembangunan_Nasional_Veteran_Yogyakarta.png">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="floating-shape shape-1"></div>
-    <div class="floating-shape shape-2"></div>
+<body style="background: radial-gradient(circle at top left, rgba(237,39,57,.15), transparent 25%),
+            radial-gradient(circle at bottom right, rgba(245,176,66,.12), transparent 25%),
+            linear-gradient(135deg,#0f0f1a,#171727,#1d1d33);
+            position: relative;
+            min-height: 100vh;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;"
+            >
     
     <div class="order-container">
         <div class="order-card">
             <!-- Logo Section -->
             <div class="logo-section">
-                <div class="logo-wrapper">
                     <img src="assets/upnvylogo.png" alt="Logo">
+                    <h2>UPNFOOD</h2>
                     <h2></h2>
-                </div>
-               
                 <p>Hi, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</p>
             </div>
             
