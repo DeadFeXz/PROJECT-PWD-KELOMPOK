@@ -9,44 +9,84 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$user = fetchOne("SELECT * FROM users WHERE id = $user_id");
+
+// Ambil data user langsung dengan query
+$sql_user = "SELECT * FROM users WHERE id = ?";
+$stmt_user = mysqli_prepare($conn, $sql_user);
+mysqli_stmt_bind_param($stmt_user, "i", $user_id);
+mysqli_stmt_execute($stmt_user);
+$result_user = mysqli_stmt_get_result($stmt_user);
+$user = mysqli_fetch_assoc($result_user);
+
+// Jika user tidak ditemukan
+if (!$user) {
+    header('Location: logout.php');
+    exit;
+}
+
 $success = '';
 $error = '';
+$current_page = basename($_SERVER['PHP_SELF']);
 
 // Update profil
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $nama_lengkap = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $no_telpon = mysqli_real_escape_string($conn, $_POST['no_telpon'] ?? '');
+    $alamat = mysqli_real_escape_string($conn, $_POST['alamat'] ?? '');
     
     // Cek email duplikat
-    $check = mysqli_query($conn, "SELECT id FROM users WHERE email = '$email' AND id != $user_id");
-    if (mysqli_num_rows($check) > 0) {
+    $check_sql = "SELECT id FROM users WHERE email = ? AND id != ?";
+    $check_stmt = mysqli_prepare($conn, $check_sql);
+    mysqli_stmt_bind_param($check_stmt, "si", $email, $user_id);
+    mysqli_stmt_execute($check_stmt);
+    $check_result = mysqli_stmt_get_result($check_stmt);
+    
+    if (mysqli_num_rows($check_result) > 0) {
         $error = "Email sudah digunakan oleh akun lain!";
     } else {
-        $sql = "UPDATE users SET nama_lengkap = '$nama_lengkap', email = '$email' WHERE id = $user_id";
-        if (mysqli_query($conn, $sql)) {
+        $update_sql = "UPDATE users SET nama_lengkap = ?, email = ?, no_telpon = ?, alamat = ? WHERE id = ?";
+        $update_stmt = mysqli_prepare($conn, $update_sql);
+        mysqli_stmt_bind_param($update_stmt, "ssssi", $nama_lengkap, $email, $no_telpon, $alamat, $user_id);
+        
+        if (mysqli_stmt_execute($update_stmt)) {
             $_SESSION['nama_lengkap'] = $nama_lengkap;
             $_SESSION['email'] = $email;
             $success = "Profil berhasil diupdate!";
-            $user = fetchOne("SELECT * FROM users WHERE id = $user_id");
+            
+            // Refresh data user
+            $refresh_sql = "SELECT * FROM users WHERE id = ?";
+            $refresh_stmt = mysqli_prepare($conn, $refresh_sql);
+            mysqli_stmt_bind_param($refresh_stmt, "i", $user_id);
+            mysqli_stmt_execute($refresh_stmt);
+            $refresh_result = mysqli_stmt_get_result($refresh_stmt);
+            $user = mysqli_fetch_assoc($refresh_result);
         } else {
             $error = "Gagal update profil!";
         }
     }
 }
 
-// Ganti password
+// Ganti password (TANPA HASH - plain text)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     $current = $_POST['current_password'];
     $new = $_POST['new_password'];
     $confirm = $_POST['confirm_password'];
     
-    if (password_verify($current, $user['password'])) {
+    // Bandingkan plain text (langsung, tanpa password_verify)
+    if ($current === $user['password']) {
         if ($new === $confirm) {
             if (strlen($new) >= 4) {
-                $hashed = password_hash($new, PASSWORD_DEFAULT);
-                mysqli_query($conn, "UPDATE users SET password = '$hashed' WHERE id = $user_id");
-                $success = "Password berhasil diubah!";
+                // Update password langsung sebagai plain text
+                $update_pass_sql = "UPDATE users SET password = ? WHERE id = ?";
+                $update_pass_stmt = mysqli_prepare($conn, $update_pass_sql);
+                mysqli_stmt_bind_param($update_pass_stmt, "si", $new, $user_id);
+                
+                if (mysqli_stmt_execute($update_pass_stmt)) {
+                    $success = "Password berhasil diubah!";
+                } else {
+                    $error = "Gagal mengubah password!";
+                }
             } else {
                 $error = "Password baru minimal 4 karakter!";
             }
@@ -60,6 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
 
 // Hapus akun
 if (isset($_GET['delete'])) {
+    // Hapus data terkait (orders dll) jika perlu
+    mysqli_query($conn, "DELETE FROM orders WHERE user_id = $user_id");
     mysqli_query($conn, "DELETE FROM users WHERE id = $user_id");
     session_destroy();
     header('Location: register.php');
@@ -77,7 +119,7 @@ if (isset($_GET['delete'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
-     <link rel="icon" type="image/png" href="assets/upnvylogo.png">
+    <link rel="icon" type="image/png" href="assets/upnvylogo.png">
     <style>
         .profile-container {
             max-width: 800px;
@@ -121,65 +163,58 @@ if (isset($_GET['delete'])) {
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="mainNavbar">
-        <div class="container">
-            <!-- Logo di KIRI -->
-            <a class="navbar-brand d-flex align-items-center" href="index.php">
-                <img src="assets/upnvylogo.png" alt="Logo" height="40">
-                <span class="fw-bold ms-2 fs-4 text-danger">UpnFood</span>
-            </a>
-            
-            <!-- Tombol Toggler untuk mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <!-- Menu TENGAH -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold <?= ($current_page == 'index.php') ? 'active-red' : '' ?>" href="index.php">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold <?= ($current_page == 'upnfoodhemat.php') ? 'active-red' : '' ?>" href="upnfoodhemat.php">
-                            UpnFood HEMAT <span class="badge bg-danger rounded-pill">Baru</span>
-                        </a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link fw-bold <?= ($current_page == 'rekomendasi.php') ? 'active-red' : '' ?>" href="rekomendasi.php">Rekomendasi</a>
-                    </li> -->
-                </ul>
-            </div>
-            
-            <!-- Bagian KANAN (Search + Profile/Login) -->
-            <div class="d-flex align-items-center" style="gap: 10px;">
-                <i class="bi bi-search fs-5 cursor-pointer" style="cursor: pointer;"></i>
-                
-                <?php if(isset($_SESSION['user_id'])): ?>
-                    <div class="dropdown d-inline-block">
-                        <button class="btn btn-success rounded-pill px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="profile.php"><i class="bi bi-person"></i> Profil Saya</a></li>
-                            <li><a class="dropdown-item" href="my-orders.php"><i class="bi bi-receipt"></i> Pesanan Saya</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-                        </ul>
-                    </div>
-                <?php else: ?>
-                    <a href="login.php" class="btn btn-success rounded-pill px-3 me-2 fw-bold">Masuk</a>
-                    <a href="register.php" class="btn btn-outline-success rounded-pill px-3 fw-bold">Daftar</a>
-                <?php endif; ?>
-            </div>
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.php">
+            <img src="assets/upnvylogo.png" alt="Logo" height="40">
+            <span class="fw-bold ms-2 fs-4 text-danger">UpnFood</span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link fw-bold <?= ($current_page == 'index.php') ? 'active-red' : '' ?>" href="index.php">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold <?= ($current_page == 'upnfoodhemat.php') ? 'active-red' : '' ?>" href="upnfoodhemat.php">
+                        UpnFood HEMAT <span class="badge bg-danger rounded-pill">Baru</span>
+                    </a>
+                </li>
+            </ul>
         </div>
-    </nav>
+        
+        <div class="d-flex align-items-center" style="gap: 10px;">
+            <i class="bi bi-search fs-5 cursor-pointer" style="cursor: pointer;"></i>
+            
+            <?php if(isset($_SESSION['user_id'])): ?>
+                <div class="dropdown d-inline-block">
+                    <button class="btn btn-success rounded-pill px-3 dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i> <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="profile.php"><i class="bi bi-person"></i> Profil Saya</a></li>
+                        <li><a class="dropdown-item" href="my-orders.php"><i class="bi bi-receipt"></i> Pesanan Saya</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <a href="login.php" class="btn btn-success rounded-pill px-3 me-2 fw-bold">Masuk</a>
+                <a href="register.php" class="btn btn-outline-success rounded-pill px-3 fw-bold">Daftar</a>
+            <?php endif; ?>
+        </div>
+    </div>
+</nav>
 
 <div class="container profile-container">
     <div class="card profile-card">
         <div class="profile-header">
             <i class="bi bi-person-circle fs-1"></i>
             <h3 class="mt-2 mb-0">Profil Saya</h3>
-            <p class="mb-0 opacity-75">@<?= $user['username'] ?></p>
+            <p class="mb-0 opacity-75">@<?= htmlspecialchars($user['username']) ?></p>
         </div>
         <div class="profile-body">
             
@@ -201,19 +236,22 @@ if (isset($_GET['delete'])) {
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Username</label>
-                    <input type="text" class="form-control bg-light" value="<?= $user['username'] ?>" disabled>
+                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($user['username']) ?>" disabled>
                     <small class="text-muted">Username tidak bisa diubah</small>
                 </div>
                 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Email</label>
-                    <input type="email" name="email" class="form-control" value="<?= $user['email'] ?>" required>
+                    <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" required>
                 </div>
                 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nama Lengkap</label>
-                    <input type="text" name="nama_lengkap" class="form-control" value="<?= $user['nama_lengkap'] ?>" required>
+                    <input type="text" name="nama_lengkap" class="form-control" value="<?= htmlspecialchars($user['nama_lengkap']) ?>" required>
                 </div>
+                
+                
+                
                 
                 <div class="mb-4">
                     <label class="form-label fw-bold">Bergabung Sejak</label>
