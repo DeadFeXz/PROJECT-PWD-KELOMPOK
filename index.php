@@ -240,7 +240,7 @@ if (isset($_GET['register']) && $_GET['register'] == 'success') {
                     </div>
                     <div class="col-6 col-md-3">
                         <div class="stat-item">
-                            <h3 class="stat-number">100+</h3>
+                            <h3 class="stat-number">3</h3>
                             <p class="stat-text">Kota Tersedia</p>
                         </div>
                     </div>
