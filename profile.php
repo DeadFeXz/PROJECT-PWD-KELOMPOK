@@ -28,30 +28,53 @@ $success = '';
 $error = '';
 $current_page = basename($_SERVER['PHP_SELF']);
 
-// Update profil
+// Update profil (termasuk username)
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+    $username = mysqli_real_escape_string($conn, $_POST['username']);
     $nama_lengkap = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $no_telpon = mysqli_real_escape_string($conn, $_POST['no_telpon'] ?? '');
     $alamat = mysqli_real_escape_string($conn, $_POST['alamat'] ?? '');
     
-    // Cek email duplikat
-    $check_sql = "SELECT id FROM users WHERE email = ? AND id != ?";
-    $check_stmt = mysqli_prepare($conn, $check_sql);
-    mysqli_stmt_bind_param($check_stmt, "si", $email, $user_id);
-    mysqli_stmt_execute($check_stmt);
-    $check_result = mysqli_stmt_get_result($check_stmt);
+    // Validasi username tidak boleh kosong
+    if (empty($username)) {
+        $error = "Username tidak boleh kosong!";
+    }
+    // Cek username duplikat (kecuali untuk user ini sendiri)
+    elseif ($username !== $user['username']) {
+        $check_username_sql = "SELECT id FROM users WHERE username = ? AND id != ?";
+        $check_username_stmt = mysqli_prepare($conn, $check_username_sql);
+        mysqli_stmt_bind_param($check_username_stmt, "si", $username, $user_id);
+        mysqli_stmt_execute($check_username_stmt);
+        $check_username_result = mysqli_stmt_get_result($check_username_stmt);
+        
+        if (mysqli_num_rows($check_username_result) > 0) {
+            $error = "Username sudah digunakan oleh akun lain!";
+        }
+    }
     
-    if (mysqli_num_rows($check_result) > 0) {
-        $error = "Email sudah digunakan oleh akun lain!";
-    } else {
-        $update_sql = "UPDATE users SET nama_lengkap = ?, email = ?, no_telpon = ?, alamat = ? WHERE id = ?";
+    // Cek email duplikat
+    if (empty($error)) {
+        $check_sql = "SELECT id FROM users WHERE email = ? AND id != ?";
+        $check_stmt = mysqli_prepare($conn, $check_sql);
+        mysqli_stmt_bind_param($check_stmt, "si", $email, $user_id);
+        mysqli_stmt_execute($check_stmt);
+        $check_result = mysqli_stmt_get_result($check_stmt);
+        
+        if (mysqli_num_rows($check_result) > 0) {
+            $error = "Email sudah digunakan oleh akun lain!";
+        }
+    }
+    
+    if (empty($error)) {
+        $update_sql = "UPDATE users SET username = ?, nama_lengkap = ?, email = ?, no_telpon = ?, alamat = ? WHERE id = ?";
         $update_stmt = mysqli_prepare($conn, $update_sql);
-        mysqli_stmt_bind_param($update_stmt, "ssssi", $nama_lengkap, $email, $no_telpon, $alamat, $user_id);
+        mysqli_stmt_bind_param($update_stmt, "sssssi", $username, $nama_lengkap, $email, $no_telpon, $alamat, $user_id);
         
         if (mysqli_stmt_execute($update_stmt)) {
             $_SESSION['nama_lengkap'] = $nama_lengkap;
             $_SESSION['email'] = $email;
+            $_SESSION['username'] = $username;
             $success = "Profil berhasil diupdate!";
             
             // Refresh data user
@@ -67,13 +90,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     }
 }
 
-// Ganti password (TANPA HASH - plain text)
+// Ganti password 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     $current = $_POST['current_password'];
     $new = $_POST['new_password'];
     $confirm = $_POST['confirm_password'];
     
-    // Bandingkan plain text (langsung, tanpa password_verify)
     if ($current === $user['password']) {
         if ($new === $confirm) {
             if (strlen($new) >= 4) {
@@ -100,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
 
 // Hapus akun
 if (isset($_GET['delete'])) {
-    // Hapus data terkait (orders dll) jika perlu
+    // Hapus data terkait (orders dll) 
     mysqli_query($conn, "DELETE FROM orders WHERE user_id = $user_id");
     mysqli_query($conn, "DELETE FROM users WHERE id = $user_id");
     session_destroy();
@@ -232,26 +254,26 @@ if (isset($_GET['delete'])) {
                 </div>
             <?php endif; ?>
             
-            <!-- Form Edit Profil -->
+            <!-- Form Edit Profil (dengan username bisa diubah) -->
             <form method="POST">
                 <div class="mb-3">
                     <label class="form-label fw-bold">Username</label>
-                    <input type="text" class="form-control bg-light" value="<?= htmlspecialchars($user['username']) ?>" disabled>
-                    <small class="text-muted">Username tidak bisa diubah</small>
+                    <input type="text" name="username" class="form-control" value="<?= htmlspecialchars($user['username']) ?>" required>
+                    <small class="text-muted">Username</small>
                 </div>
                 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Email</label>
-                    <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" required>
+                    <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']) ?>" 
+                    required>
+                    <small class="text-muted">Email</small>
                 </div>
                 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nama Lengkap</label>
                     <input type="text" name="nama_lengkap" class="form-control" value="<?= htmlspecialchars($user['nama_lengkap']) ?>" required>
+                    <small class="text-muted">Nama Lengkap</small>
                 </div>
-                
-                
-                
                 
                 <div class="mb-4">
                     <label class="form-label fw-bold">Bergabung Sejak</label>
