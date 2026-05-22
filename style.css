@@ -1526,6 +1526,27 @@ html, body {
     font-size: 0.8rem;
     margin-bottom: 8px;
 }
+/* Perbaikan visibility teks di halaman sukses order */
+.order-card .success-icon {
+    font-size: 70px;
+    color: #22c55e;
+    margin-bottom: 15px;
+}
+
+.order-card h4.fw-bold {
+    color: white !important;
+    font-size: 1.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.order-card .text-muted {
+    color: rgba(255,255,255,0.85) !important;
+    font-size: 0.9rem;
+}
+
+.order-card .color-white {
+    color: white !important;
+}
 
 /* Order responsive */
 @media (max-width: 768px) {

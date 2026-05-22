@@ -186,15 +186,18 @@ if (isset($_GET['delete'])) {
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="mainNavbar">
     <div class="container">
+        <!-- Logo di KIRI -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="assets/upnvylogo.png" alt="Logo" height="40">
             <span class="fw-bold ms-2 fs-4 text-danger">UpnFood</span>
         </a>
         
+        <!-- Tombol Toggler untuk mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         
+        <!-- Menu TENGAH -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
@@ -208,6 +211,7 @@ if (isset($_GET['delete'])) {
             </ul>
         </div>
         
+        <!-- Bagian KANAN (Profile/Login) -->
         <div class="d-flex align-items-center" style="gap: 10px;">
             <i class="bi bi-search fs-5 cursor-pointer" style="cursor: pointer;"></i>
             
@@ -230,6 +234,7 @@ if (isset($_GET['delete'])) {
         </div>
     </div>
 </nav>
+
 
 <div class="container profile-container">
     <div class="card profile-card">

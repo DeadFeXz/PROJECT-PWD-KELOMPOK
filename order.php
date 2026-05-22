@@ -126,7 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="assets/upnvylogo.png" alt="Logo">
                     <h2>UPNFOOD</h2>
                     <h2></h2>
-                <p>Hi, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!</p>
+                    <p style="text-align: center; width: 100%;">
+                        Hi, <?= htmlspecialchars($_SESSION['nama_lengkap']) ?>!
+                    </p>
             </div>
             
             <?php if ($order_success): ?>
@@ -136,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="bi bi-check-circle-fill"></i>
                     </div>
                     <h4 class="mb-1 fw-bold">Pesanan Berhasil! 🎉</h4>
-                    <p class="text-muted small">Terima Kasih, <?= htmlspecialchars($order_data['nama_pemesan']) ?>!</p>
+                    <p class="text-muted small color-white">Terima Kasih, <?= htmlspecialchars($order_data['nama_pemesan']) ?>!</p>
                     <p class="text-muted small">Pesanan Anda telah diterima.</p>
                     <div class="badge-premium mb-2" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
                         <i class="bi bi-receipt"></i> #<?= str_pad($order_data['order_id'], 5, '0', STR_PAD_LEFT) ?>

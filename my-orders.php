@@ -13,7 +13,6 @@ $user_id = $_SESSION['user_id'];
 $nama_pemesan = $_SESSION['nama_lengkap'];
 
 // ========== INNER JOIN: Ambil semua pesanan user dengan detail menu ==========
-// SELECT <field1>, <field2>, <fieldn> FROM <tabel1> INNER JOIN <tabel2> ON <key.tabel1> = <key.tabel2>
 $sql = "SELECT o.*, 
                m.nama as menu_original_name,
                m.gambar as menu_image,
@@ -30,7 +29,7 @@ mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $orders = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-// ========== LEFT JOIN:  pesanan user  ==========
+// ========== LEFT JOIN: pesanan user ==========
 $sql_stats = "SELECT u.nama_lengkap,
                      COUNT(o.id) as total_pesanan,
                      COALESCE(SUM(o.total_harga), 0) as total_belanja,
@@ -80,11 +79,13 @@ if (isset($_GET['cancel']) && isset($_GET['id'])) {
 $message = '';
 if (isset($_GET['msg'])) {
     if ($_GET['msg'] == 'cancelled') {
-        $message = '<div class="alert alert-success">Pesanan berhasil dibatalkan!</div>';
+        $message = '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> Pesanan berhasil dibatalkan!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>';
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">
@@ -97,22 +98,231 @@ if (isset($_GET['msg'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="assets/upnvylogo.png">
-     
-    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+        }
+        
+        /* Active menu */
+        .active-red {
+            color: #ed2739 !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Orders Container */
+        .orders-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        /* Order Card */
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .order-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transform: translateY(-2px);
+        }
+        
+        /* Order Header */
+        .order-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        /* Order Body */
+        .order-body {
+            padding: 20px;
+        }
+        
+        /* Order Address */
+        .order-address {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px 15px;
+            margin-top: 10px;
+        }
+        
+        /* Status Badge */
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-processing {
+            background: #cce5ff;
+            color: #004085;
+        }
+        
+        .status-completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* Button Cancel */
+        .btn-cancel {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-cancel:hover {
+            background: #bb2d3b;
+            color: white;
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .stat-icon {
+            font-size: 35px;
+            color: #ed2739;
+            margin-bottom: 10px;
+        }
+        
+        /* Empty Orders */
+        .empty-orders {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .empty-orders i {
+            font-size: 80px;
+            color: #dee2e6;
+            margin-bottom: 20px;
+        }
+        
+        /* Text Colors */
+        .text-muted {
+            color: #6c757d !important;
+        }
+        
+        .text-danger {
+            color: #ed2739 !important;
+        }
+        
+        .fw-bold {
+            font-weight: 700;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .orders-container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .order-body {
+                padding: 15px;
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .empty-orders {
+                padding: 40px 20px;
+            }
+            
+            .empty-orders i {
+                font-size: 60px;
+            }
+            
+            .text-md-end {
+                text-align: left !important;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .stat-icon {
+                font-size: 28px;
+            }
+            
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
 
+<!-- Navbar SAMA PERSIS dengan profile.php -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm" id="mainNavbar">
     <div class="container">
+        <!-- Logo di KIRI -->
         <a class="navbar-brand d-flex align-items-center" href="index.php">
             <img src="assets/upnvylogo.png" alt="Logo" height="40">
             <span class="fw-bold ms-2 fs-4 text-danger">UpnFood</span>
         </a>
         
+        <!-- Tombol Toggler untuk mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         
+        <!-- Menu TENGAH -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
@@ -126,6 +336,7 @@ if (isset($_GET['msg'])) {
             </ul>
         </div>
         
+        <!-- Bagian KANAN (Profile/Login) -->
         <div class="d-flex align-items-center" style="gap: 10px;">
             <i class="bi bi-search fs-5 cursor-pointer" style="cursor: pointer;"></i>
             
@@ -157,7 +368,7 @@ if (isset($_GET['msg'])) {
         </a>
     </div>
     
-    <!-- Statistik Cards (LEFT JOIN) -->
+    <!-- Statistik Cards -->
     <div class="row g-3 mb-4">
         <div class="col-md-6">
             <div class="stat-card">
@@ -177,7 +388,7 @@ if (isset($_GET['msg'])) {
     
     <?= $message ?>
     
-    <!-- Daftar Pesanan (INNER JOIN) -->
+    <!-- Daftar Pesanan -->
     <?php if(count($orders) > 0): ?>
         <?php foreach($orders as $order): ?>
         <div class="order-card">
@@ -218,40 +429,40 @@ if (isset($_GET['msg'])) {
                 </div>
             </div>
             <div class="order-body">
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="mb-1">
-                        <i class="bi bi-shop"></i> <?= htmlspecialchars($order['resto_name'] ?? 'UpnFood Official') ?>
-                    </p>
-                    <h5 class="fw-bold mb-2"><?= htmlspecialchars($order['menu_nama']) ?></h5>
-                    <p class="text-muted mb-1">
-                        <i class="bi bi-cart"></i> <?= $order['quantity'] ?> porsi
-                    </p>
-                    <p class="text-muted mb-1">
-                        <i class="bi bi-telephone"></i> <?= htmlspecialchars($order['no_telpon']) ?>
-                    </p>
-                    <div class="order-address">
-                        <i class="bi bi-geo-alt text-danger me-1"></i>
-                        <small><?= htmlspecialchars($order['alamat']) ?></small>
-                    </div>
-                    <?php if(!empty($order['catatan'])): ?>
-                        <p class="text-muted mb-0 mt-2">
-                            <i class="bi bi-chat"></i> Catatan: <?= htmlspecialchars($order['catatan']) ?>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class="mb-1 text-success">
+                            <i class="bi bi-shop"></i> <?= htmlspecialchars($order['resto_name'] ?? 'UpnFood Official') ?>
                         </p>
-                    <?php endif; ?>
-                </div>
-                <div class="col-md-4 text-md-end">
-                    <h5 class="text-danger fw-bold mb-2">
-                        Rp <?= number_format($order['total_harga'], 0, ',', '.') ?>
-                    </h5>
-                    <?php if($order['status'] == 'pending'): ?>
-                        <a href="?cancel=1&id=<?= $order['id'] ?>" class="btn-cancel" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')">
-                            <i class="bi bi-x-circle"></i> Batalkan
-                        </a>
-                    <?php endif; ?>
+                        <h5 class="fw-bold mb-2"><?= htmlspecialchars($order['menu_nama']) ?></h5>
+                        <p class="text-muted mb-1">
+                            <i class="bi bi-cart"></i> <?= $order['quantity'] ?> porsi
+                        </p>
+                        <p class="text-muted mb-1">
+                            <i class="bi bi-telephone"></i> <?= htmlspecialchars($order['no_telpon']) ?>
+                        </p>
+                        <div class="order-address">
+                            <i class="bi bi-geo-alt text-danger me-1"></i>
+                            <small><?= htmlspecialchars($order['alamat']) ?></small>
+                        </div>
+                        <?php if(!empty($order['catatan'])): ?>
+                            <p class="text-muted mb-0 mt-2">
+                                <i class="bi bi-chat"></i> Catatan: <?= htmlspecialchars($order['catatan']) ?>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <h5 class="text-danger fw-bold mb-2">
+                            Rp <?= number_format($order['total_harga'], 0, ',', '.') ?>
+                        </h5>
+                        <?php if($order['status'] == 'pending'): ?>
+                            <a href="?cancel=1&id=<?= $order['id'] ?>" class="btn-cancel" onclick="return confirm('Yakin ingin membatalkan pesanan ini?')">
+                                <i class="bi bi-x-circle"></i> Batalkan
+                            </a>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
-        </div>
         </div>
         <?php endforeach; ?>
     <?php else: ?>
